@@ -2,13 +2,86 @@ const formEl = document.getElementById('best-books-form');
 const yearEl = document.getElementById('year');
 const monthEl = document.getElementById('month');
 const dateEl = document.getElementById('date');
-const BASE_URL = 'https://api.nytimes.com/svc/books/v3/';
-const API_KEY ='mGqS9lCf3m3v6lc7FKR9rLCBcHxAMo0f'
 
-formEl.addEventListener('submit', function(e) {
-  e.preventDefault();
+"use strict";
+
+function exportToJsonFile(jsonData) {
+  let dataStr = JSON.stringify(jsonData, null, 2);
+  let dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+
+  let exportFileDefaultName = 'data.json';
+
+  let linkElement = document.createElement('a');
+  linkElement.setAttribute('href', dataUri);
+  linkElement.setAttribute('download', exportFileDefaultName);
+  linkElement.click();
+}
+
+
+class BookBatch{
+
+  constructor(){
+    this.bookList=[]
+  }
+
+  exportToTxt(){
+
+    console.log(JSON.stringify(this.bookList, null, 2))
+
+    let myJsonString = JSON.stringify(this.bookList)
+
+    exportToJsonFile(this.bookList)
+
+    //jsonify a list of objects
+
+  }
+
+}
+
+const deleteElements = function (){
+
+  //timing function did not work
+  //add a promise instead
+
+  // const notice = document.getElementById('maintenance-notice')
+  // setTimeout(()=>{
+  //
+  //   notice.style.display='none'
+  //
+  // }, 1000)
+
+
+  // add a time delay function
+
+  let parentDiv = document.getElementById('books-container');
+  while (parentDiv.firstChild){
+    parentDiv.firstChild.remove()
+  }
+
+}
+
+
+const urlBuilder = function(BASE_URL, year, month, date, API_KEY){
+
+  return `${BASE_URL}lists/${year}-${month}-${date}/hardcover-fiction.json?api-key=${API_KEY}`
+
+}
+
+const fetchAPI = function(e){
+  if(e){
+    e.preventDefault();
+  }
+
+
+  //add a timing function to display a message that dissapears
+  //does not automatically refresh. if you change the year, the form does not identify the change
+  //for now, you have to hit the refresh button
 
   let divEl = document.getElementById('books-container');
+
+  const BASE_URL = 'https://api.nytimes.com/svc/books/v3/';
+
+  const API_KEY ='mGqS9lCf3m3v6lc7FKR9rLCBcHxAMo0f'
 
   const year = yearEl.value;
 
@@ -16,18 +89,24 @@ formEl.addEventListener('submit', function(e) {
 
   const date = dateEl.value;
 
+  let url = urlBuilder(BASE_URL, year, month, date, API_KEY)
+
   // Fetch bestselling books for date and add top 5 to page
   // Best hardcover fiction books for the date
 
-  const url = `${BASE_URL}lists/${year}-${month}-${date}/hardcover-fiction.json?api-key=${API_KEY}`;
+  //const url = `${BASE_URL}lists/${year}-${month}-${date}/hardcover-fiction.json?api-key=${API_KEY}`;
 
   fetch(url)
       .then(function(data) {
         //debugger
+        //console.log(data.json())
         return data.json();
       })
       .then(function(responseJson) {
         console.log(responseJson);
+
+        let myList = new BookBatch()
+        //let bks=[]
 
         for (let counter=0; counter<5; counter++){
 
@@ -41,6 +120,17 @@ formEl.addEventListener('submit', function(e) {
           const imgElem = document.createElement('img')
           const pElem = document.createElement('p')
           const aElem = document.createElement('a')
+
+          const bk = {
+            title:book,
+            author:author_,
+          }
+
+          myList.bookList.push(bk)
+
+
+
+          //myList.bookList.push(book)
 
           if (book_img.length > 0) {
             const imgUrl = book_img;
@@ -60,9 +150,34 @@ formEl.addEventListener('submit', function(e) {
           divEl.append(pElem)
           divEl.append(aElem)
 
-
         }
+
+        //console.log(myList.bookList)
+
+        myList.exportToTxt()
+
+        // event listener for change. if the user changes the year, month or date,
+        // then it deletes the items already present in the webpage
+
+        if(formEl){
+          formEl.addEventListener('change', deleteElements, false)
+        }
+
+
+        //return responseJson.results.books[0].title
 
       });
 
-});
+  return url
+}
+
+if(formEl){
+  formEl.addEventListener('submit', fetchAPI, false)
+  //formEl.addEventListener('change', fetchAPI, false)
+}
+
+// if(formEl){
+//   formEl.addEventListener('change', fetchAPI, false)
+// }
+
+

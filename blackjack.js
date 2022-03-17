@@ -92,9 +92,9 @@ const showHand = function(player) {
     return card.displayVal;
   });
   console.log(
-    `${player.name}'s hand is ${displayHand.join(', ')} (${
-      calcPoints(player.hand).total
-    })`
+      `${player.name}'s hand is ${displayHand.join(', ')} (${
+          calcPoints(player.hand).total
+      })`
   );
 };
 
