@@ -38,9 +38,11 @@ class BookBatch{
 
   }
 
-  clearItems(){
+  clearList(){
 
-    this.bookList.clearItems()
+    //kind of redundant, because when the constructor is called the list is emptied.
+    this.bookList=[]
+
 
   }
 
@@ -136,10 +138,6 @@ const fetchAPI = function(e){
 
           myList.bookList.push(bk)
 
-
-
-          //myList.bookList.push(book)
-
           if (book_img.length > 0) {
             const imgUrl = book_img;
             imgElem.src=imgUrl
@@ -160,7 +158,8 @@ const fetchAPI = function(e){
 
         }
 
-
+        // event listener for change. if the user changes the year, month or date,
+        // then it deletes the items already present in the webpage
 
         if(formEl){
           formEl.addEventListener('change', deleteElements, false)
@@ -168,13 +167,7 @@ const fetchAPI = function(e){
 
         myList.exportToTxt()
 
-        myList.clearItems()
-
-        // event listener for change. if the user changes the year, month or date,
-        // then it deletes the items already present in the webpage
-
-
-
+        myList.clearList()
 
         //return responseJson.results.books[0].title
 
@@ -185,11 +178,8 @@ const fetchAPI = function(e){
 
 if(formEl){
   formEl.addEventListener('submit', fetchAPI, false)
-  //formEl.addEventListener('change', fetchAPI, false)
+
 }
 
-// if(formEl){
-//   formEl.addEventListener('change', fetchAPI, false)
-// }
 
 
