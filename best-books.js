@@ -30,9 +30,17 @@ class BookBatch{
 
     let myJsonString = JSON.stringify(this.bookList)
 
+    //create an alert to ask the user if they want to export the list of books to json file
+
     exportToJsonFile(this.bookList)
 
     //jsonify a list of objects
+
+  }
+
+  clearItems(){
+
+    this.bookList.clearItems()
 
   }
 
@@ -152,16 +160,20 @@ const fetchAPI = function(e){
 
         }
 
-        //console.log(myList.bookList)
 
-        myList.exportToTxt()
-
-        // event listener for change. if the user changes the year, month or date,
-        // then it deletes the items already present in the webpage
 
         if(formEl){
           formEl.addEventListener('change', deleteElements, false)
         }
+
+        myList.exportToTxt()
+
+        myList.clearItems()
+
+        // event listener for change. if the user changes the year, month or date,
+        // then it deletes the items already present in the webpage
+
+
 
 
         //return responseJson.results.books[0].title
