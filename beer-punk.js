@@ -19,7 +19,9 @@ button1.id="button-1"
 button2.id="button-2"
 
 button1.innerText="Export JSON"
+button1.className="btn btn-primary mr-4"
 button2.innerText="Don't Export JSON"
+button2.className="btn btn-primary mr-4"
 
 divElCheck.append(x)
 divElCheck.append(button1)
@@ -88,50 +90,20 @@ class BreweryBatch{
   }
 
   exportToTxt(){
-
     console.log(JSON.stringify(this.breweryList, null, 2))
-
     let myJsonString = JSON.stringify(this.breweryList)
-
-    //create an alert to ask the user if they want to export the list of books to json file
-
     exportToJsonFile(this.breweryList)
-
-    //jsonify a list of objects
 
   }
 
   clearList(){
 
-    //kind of redundant, because when the constructor is called the list is emptied.
     this.breweryList=[]
 
 
   }
 
 }
-
-// const deleteElements = function (){
-//
-//   //timing function did not work
-//   //add a promise instead
-//
-//   // const notice = document.getElementById('maintenance-notice')
-//   // setTimeout(()=>{
-//   //
-//   //   notice.style.display='none'
-//   //
-//   // }, 1000)
-//
-//
-//   // add a time delay function
-//
-//   let parentDiv = document.getElementById('checkbox-container');
-//   while (parentDiv.firstChild){
-//     parentDiv.firstChild.remove()
-//   }
-//
-// }
 
 const deleteElements = function (){
 
@@ -168,20 +140,12 @@ const fetchAPI = function(e){
     e.preventDefault();
   }
 
-
-  //add a timing function to display a message that dissapears
-  //does not automatically refresh. if you change the year, the form does not identify the change
-  //for now, you have to hit the refresh button
-
   let divEl = document.getElementById('brewery-container');
 
   const state = stateEl.value
-
   const page = pageEl.value
   const city = cityEl.value
-
   let url = urlBuilder(state, city, page)
-
 
   fetch(url)
       .then(function(data) {
@@ -193,7 +157,6 @@ const fetchAPI = function(e){
         console.log(responseJson);
 
         let myList = new BreweryBatch()
-        //let bks=[]
 
         for (let counter=0; counter<5; counter++){
 
@@ -218,7 +181,9 @@ const fetchAPI = function(e){
           //could have used map
 
           h1Elem.innerText=brewery
+          h1Elem.id="beer-name"
           h2Elem.innerText=city
+          h2Elem.id="beer-city"
           pElem.innerText=street
           aElem.href=breweryLink
           aElem.id="brewery-link"
@@ -239,27 +204,9 @@ const fetchAPI = function(e){
           myList.exportToTxt()
         }
 
-        //if (generateJson.)
-
-        //
-        //
-        // divElCheck.append(x)
-
-        // event listener for change. if the user changes the state, city or page,
-        // then it deletes the items already present in the webpage
-
         if(formEl){
           formEl.addEventListener('change', deleteElements, false)
         }
-
-        // if(x){
-        //   x.addEventListener('change', deleteElements2, false)
-        // }
-
-        //myList.exportToTxt()
-
-        //if user selects yes export, then show a submit button,
-        //add a listener to generate the file
 
         myList.clearList()
 
@@ -273,11 +220,4 @@ if(formEl){
 
 }
 
-//button.onclick(check())
-
-// button1.addEventListener('onclick', check, false)
-//
-// button2.addEventListener('onclick', uncheck, false)
-
-//selector.addEventListener("change", selectOption)
 

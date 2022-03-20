@@ -22,3 +22,17 @@ input:valid{
 .show{
     display: block;
 }
+
+#beer-name{
+    font-size: 40px;
+    background-color: white;
+    /*color: #ba9d37;*/
+    color: blue;
+}
+
+#beer-city{
+    font-size: 30px;
+    background-color: white;
+    /*color: #ba9d37;*/
+    color: orangered;
+}
