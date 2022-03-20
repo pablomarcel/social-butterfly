@@ -1,0 +1,24 @@
+body {
+    font-size: 16px;
+}
+
+.top-title{
+    font-size: 45px;
+    background-color: white;
+    /*color: #ba9d37;*/
+    color: blue;
+}
+
+input:invalid{
+    box-shadow: 2px 2px 5px orangered;
+}
+input:valid{
+    box-shadow: 2px 2px 5px blue;
+}
+.hidden{
+    display: none;
+}
+
+.show{
+    display: block;
+}

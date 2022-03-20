@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>US Breweries</title>
+  <link rel="stylesheet" href="beer-punk.css" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+  <div class="container">
+    <div class="row my-4">
+      <div class="col-12">
+        <h1 class="top-title">US Breweries</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+
+        <form id="brewery-form">
+          <div class="form-group mb-2">
+            <label for="state">State:</label>
+            <input 
+              id="state"
+              name="state"
+              class="form-control" 
+              type="text"
+              placeholder="Washington"
+              pattern="[a-zA-Z]{1,}$"
+
+            />
+          </div>
+          <div class="form-group mb-2">
+            <label for="city">City:</label>
+            <input
+              id="city"
+              name="city"
+              class="form-control"
+              type="text"
+              placeholder="Bothell"
+              pattern="[a-zA-Z]{1,}$"
+            />
+          </div>
+          <div class="form-group mb-2">
+            <label for="page">Page:</label>
+            <input
+              id="page"
+              name="page"
+              class="form-control"
+              type="text"
+              placeholder="1"
+              pattern="\d{1,}"
+               />
+          </div>
+
+          <div class="form-group mb-2">
+            <input id="submit" class="btn btn-primary" type="submit" value="Go" />
+          </div>
+
+
+
+        </form>
+
+        <div class="form-group mb-2" id="checkbox-container">
+
+        </div>
+
+      </div>
+
+      <div class="col-md-7 offset-md-1" id="brewery-container">
+
+      </div>
+
+
+      </div>
+  </div>
+
+<!--  <script src="api-key.js"></script>-->
+  <script src="beer-punk.js"></script>
+</body>
+</html>
